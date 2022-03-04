@@ -3,6 +3,14 @@ function load(id, file) {
 }
 
 
+var path;
+
+function editor_load(id, file, inpath) {
+    $(id).load(file);
+    path = inpath;
+}
+
+
 function add() {
     let essay = $('#essay').val(); 
     let content = $('.ck-editor__editable_inline').html(); 
@@ -72,6 +80,7 @@ function get_essay_list() {
         dataType: 'json',
         success: (data) => {
             
+            $('#essay_list').html('');
             if (data['code'] == 1 ) {
                 for (let i = 0; i < data['content'].length; i++) {
                     $('#essay_list').append(`<tr>\
@@ -80,8 +89,8 @@ function get_essay_list() {
                         <td>${data['content'][i]['path']}</td>
                         <td>${data['content'][i]['time']}</td>
                         <td>
-                            <button type="button" class="layui-btn" onclick="load('#content', '/background/part/editor.html')">编辑</button>
-                            <button type="button" class="layui-btn" onclick="">删除</button>    
+                            <button type="button" class="layui-btn" onclick="editor_load('#content', '/background/part/editor.html', '${data['content'][i]['path']}') ">编辑</button>
+                            <button type="button" class="layui-btn" onclick="delete_essay('${data['content'][i]['path']}')">删除</button>    
                         </td>
                         
                     </tr>`);
@@ -118,3 +127,74 @@ function get_user_list() {
     }); 
 }
 
+
+function get_essay() {
+    $.ajax({
+        url: '/api/get_essay',
+        type: 'POST',
+        data: {
+            'path': $('#path').val()
+        },
+        dataType: 'json',
+        success: (data) => {
+            
+            if (data['code'] == 1 ) {
+                $('#essay').val(data['content']['essay']);
+                $('.ck-editor__editable_inline').html(data['content']['content']);
+                $('#sort').val(data['content']['sort']);
+            }
+        
+        }
+    }); 
+}
+
+
+function update() {
+    let essay = $('#essay').val(); 
+    let content = $('.ck-editor__editable_inline').html(); 
+    let sort = $('#sort').val(); 
+    let path = $('#path').val();
+
+    $.ajax({
+        url: "/api/update",
+        data: {
+            'essay' : essay,
+            'content' : content,
+            'sort' : sort,
+            'path' : path
+        }, //请求的表单
+        type: "POST",
+        dataType: "json",
+        success: (data) => {
+            //请求成功后访问类属性，并显示服务端返回数据
+            //如果登录成功
+            if (data['code'] == 1 ) {
+                alert('文章已更改');
+                get_essay();
+            }
+            
+        }
+    }); 
+
+}
+
+
+function delete_essay(path) {
+    $.ajax({
+        url: "/api/delete",
+        data: {
+            'path' : path
+        }, //请求的表单
+        type: "POST",
+        dataType: "json",
+        success: (data) => {
+            //请求成功后访问类属性，并显示服务端返回数据
+            //如果登录成功
+            if (data['code'] == 1 ) {
+                alert('删除成功');
+                get_essay_list();
+            }
+            
+        }
+    }); 
+}

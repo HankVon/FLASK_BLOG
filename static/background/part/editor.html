@@ -1,62 +1,70 @@
 <div id="content">
-    <div>
-        <button type="button" class="layui-btn" onclick="load('#content', 'background/part/table.html')">返回</button>
+  <div>
+    <button type="button" class="layui-btn" onclick="load('#content', 'background/part/table.html')">返回</button>
+  </div>
+  <div class="layui-form-item" style="width: 500px; margin-left: 400px;">
+    <label class="layui-form-label">输入框</label>
+    <div class="layui-input-block">
+      <input type="text" id="essay" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off"
+        class="layui-input">
     </div>
-    <div class="layui-form-item" style="width: 500px; margin-left: 400px;">
-        <label class="layui-form-label">输入框</label>
-        <div class="layui-input-block">
-        <input type="text" id="essay" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-        </div>
+  </div>
+  <div style="height: 350px; width: 600px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;">
+    <div id="editor">
+      <p>This is some sample content.</p>
     </div>
-    <div style="height: 350px; width: 600px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;">
-        <div id="editor">
-            <p>This is some sample content.</p>
-        </div>
-    </div>    
+  </div>
 
-    <div class="layui-form-item" style="width: 500px; margin-left: 400px;">
-        <label class="layui-form-label">选择框</label>
-        <div class="layui-input-block">
-          <select name="city" id="sort" lay-verify="required">
-            <option value=""></option>
-            <option value="0">北京</option>
-            <option value="1">上海</option>
-            <option value="2">广州</option>
-            <option value="3">深圳</option>
-            <option value="4">杭州</option>
-          </select>
-        </div>
+  <div class="layui-form-item" style="width: 500px; margin-left: 400px;">
+    <label class="layui-form-label">选择框</label>
+    <div class="layui-input-block">
+      <select name="city" id="sort" lay-verify="required">
+        <option value=""></option>
+        <option value="0">北京</option>
+        <option value="1">上海</option>
+        <option value="2">广州</option>
+        <option value="3">深圳</option>
+        <option value="4">杭州</option>
+      </select>
     </div>
+  </div>
 
-    <div class="layui-form-item" style="width: 500px; margin-left: 400px;">
-        <label class="layui-form-label">输入框</label>
-        <div class="layui-input-block">
-        <input type="text" id="path" name="title" required  lay-verify="required" placeholder="请输入链接" autocomplete="off" class="layui-input">
-        </div>
+  <div class="layui-form-item" style="width: 500px; margin-left: 400px;">
+    <label class="layui-form-label">输入框</label>
+    <div class="layui-input-block">
+      <input type="text" id="path" name="title" required lay-verify="required" placeholder="请输入链接" autocomplete="off"
+        class="layui-input">
     </div>
+  </div>
 
-    <div style="width: 500px; margin-left: 500px;">
-    <button onclick="add()">提交</button> 
-    </div>
+  <div style="width: 500px; margin-left: 500px;">
+    <button onclick="update()">提交</button>
+  </div>
 </div>
 
 <script>
-    function MinHeightPlugin(editor) {
-  this.editor = editor;
-}
-MinHeightPlugin.prototype.init = function() {
-  this.editor.ui.view.editable.extendTemplate({
-    attributes: {
-      style: {
-        minHeight: '300px'
+  function MinHeightPlugin(editor) {
+    this.editor = editor;
+  }
+  MinHeightPlugin.prototype.init = function () {
+    this.editor.ui.view.editable.extendTemplate({
+      attributes: {
+        style: {
+          minHeight: '300px'
+        }
       }
-    }
-  });
-};
-ClassicEditor.builtinPlugins.push(MinHeightPlugin);
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
+    });
+  };
+  ClassicEditor.builtinPlugins.push(MinHeightPlugin);
+  ClassicEditor
+    .create(document.querySelector('#editor'))
+    .then(editor => {
+          this.editor.isReadOnly = false; //（此处验证为是否可读）
+        })
+    .catch(error => {
+      console.error(error);
+    });
+
+  $('#path').val(path);
+  get_essay();
 </script>

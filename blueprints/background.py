@@ -34,7 +34,7 @@ def teardown_request(error):
 '''
 
 @background.post('/api/add')
-def user_login():
+def add():
     inessay = request.form.get('essay')
     incontent = request.form.get('content')
     inpath = request.form.get('path')
@@ -134,6 +134,89 @@ def get_essay_list():
     return {
         'code': 1,
         'content': essays_list
+    }
+
+
+@background.post('/api/get_essay')
+def get_essay():
+    path = request.form.get('path')
+    
+    essay = g.db_session.query(Essay).filter(Essay.path == path).first()
+    
+    if not essay:
+        return {
+            'code': 0,
+            'content': '文章路径不正确'
+        }
+        
+    return {
+        'code': 1,
+        'content': {
+            'essay': essay.essay,
+            'content': essay.content,
+            'sort': essay.sort
+        }
+    }
+
+
+@background.post('/api/update')
+def update():
+    inessay = request.form.get('essay')
+    incontent = request.form.get('content')
+    inpath = request.form.get('path')
+    insort = request.form.get('sort')
+
+    if not inessay:
+        return {
+            'code': 0,
+            'content': '标题不能为空'
+        }
+
+    if not incontent:
+        return {
+            'code': 0,
+            'content': '内容不能为空'
+        }
+
+    if not inpath:
+        return {
+            'code': 0,
+            'content': '链接不能为空'
+        }
+
+    essay = g.db_session.query(Essay).filter(Essay.path == inpath).first()
+    if not essay:
+        return {
+            'code': 0,
+            'content': '该文章不存在'
+        }
+
+    essay.essay = inessay
+    essay.content = incontent
+    essay.sort = insort
+    g.db_session.commit()
+
+    return {
+        'code': 1
+    }
+
+
+@background.post('/api/delete')
+def delete():
+    path = request.form.get('path')
+
+    essay = g.db_session.query(Essay).filter(Essay.path == path).first()
+    if not essay:
+        return {
+            'code': 0,
+            'content': '该文章不存在'
+        }
+        
+    g.db_session.delete(essay)
+    g.db_session.commit()
+    
+    return {
+        'code': 1
     }
 
 
