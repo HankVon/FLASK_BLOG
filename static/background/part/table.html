@@ -1,0 +1,32 @@
+<div style="width: 1000px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;">
+  <div class="layui-btn-group">
+    <button type="button" class="layui-btn" onclick="load('#content', '/background/part/editor.html')">增加</button>
+    <button type="button" class="layui-btn">分类</button>
+  </div>
+
+  <table class="layui-table">
+    <colgroup>
+      <col width="200">
+      <col width="200">
+      <col width="200">
+      <col width="200">
+      <col width="200">
+    </colgroup>
+    <thead>
+    <tr>  
+        <th>文章标题</th>
+        <th>分类</th>
+        <th>路径</th>
+        <th>加入时间</th>
+        <th>操作</th>
+    </tr> 
+    </thead>
+    <tbody id="essay_list">
+    
+    </tbody>
+  </table>
+</div>
+
+<script>
+  get_essay_list();
+</script>
