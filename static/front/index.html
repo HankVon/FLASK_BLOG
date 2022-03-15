@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>开始使用 layui</title>
+  <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+</head>
+<body background="https://images2.alphacoders.com/954/954227.jpg">
+ 
+<!-- 你的 HTML 代码 -->
+ 
+<ul class="layui-nav">
+  <li class="layui-nav-item">
+    <a href="/">控制台</a>
+  </li>
+  <li class="layui-nav-item">
+    <a href="">个人中心</a>
+  </li>
+  <li class="layui-nav-item">
+    <a href=""><img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>
+    <dl class="layui-nav-child">
+      <dd><a href="javascript:;">修改信息</a></dd>
+      <dd><a href="javascript:;">安全管理</a></dd>
+      <dd><a href="javascript:;">退了</a></dd>
+    </dl>
+  </li>
+</ul>
+
+<button class="layui-btn" id="demo1" style="float: right;">
+    下拉菜单
+    <i class="layui-icon layui-icon-down layui-font-12"></i>
+</button>
+
+<div style="width: 800px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;background:#FFF; color:#000;margin-bottom: 20px;margin-top: 20px;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md6">
+          
+            <div style="padding: 30px;">
+                <h5 class="layui-font-20" style="padding: 5px;">广之</h5>
+				<h6 style="padding: 5px;">HankVon</h6>
+				<p style="padding: 5px;">一个IT学习与分享的网站</p>
+				<a href="/note" style="padding: 5px;">学习笔记</a>
+				<a href="/about">关于本站</a>
+            
+          </div>   
+        </div>
+        <div class="layui-col-md6">          
+            <div style="padding: 30px;">
+                <img src="static/js/front/cat.jpg" class="layui-col-md9">
+          </div>   
+        </div>
+      </div>   
+</div>
+<div style="width: 800px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;background:#FFF; color:#000;">
+    <div id="essay_list" class="layui-card">
+
+
+    </div>
+</div>
+
+
+
+<script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    layui.use('dropdown', function(){
+      var dropdown = layui.dropdown
+      dropdown.render({
+        elem: '#demo1' //可绑定在任意元素中，此处以上述按钮为例
+        ,data: [{
+          title: 'menu item 1'
+          ,id: 100
+          ,href: '#'
+        },{
+          title: 'menu item 2'
+          ,id: 101
+          ,href: 'https://www.layui.com/' //开启超链接
+          ,target: '_blank' //新窗口方式打开
+        },
+        ]
+    });
+});
+    </script>
+
+<script src="/js/front/front.js"></script>
+    <script>
+        get_essay();
+    </script>
+</body>
+</html>
