@@ -200,3 +200,14 @@ function delete_essay(path) {
         }
     }); 
 }
+
+function logout(){
+    $.ajax({
+        url: "/api/logout",
+        type: "GET",
+        dataType: "json",
+        success: (data) => {
+            location.reload();  
+        }
+    }); 
+}

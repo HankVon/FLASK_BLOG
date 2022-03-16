@@ -235,6 +235,15 @@ def get_user_list():
         'code': 1,
         'content': users_list
     }
+
+
+@background.get('/api/logout')
+def logout():
+    session.clear()
+    return {
+        'code': 1
+    }
+
 '''
     Route
 '''

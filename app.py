@@ -4,7 +4,7 @@ from flask import Flask
 
 from blueprints.login import login
 from blueprints.background import background
-
+from blueprints.front import front
 
 def create_app():
     app = Flask(__name__)
@@ -13,6 +13,7 @@ def create_app():
     
     app.register_blueprint(login)
     app.register_blueprint(background)
+    app.register_blueprint(front)
 
     return app
 

@@ -1,6 +1,7 @@
 from datetime import datetime
 from itertools import count
 from time import time
+from click import IntRange
 from flask.helpers import total_seconds
 from sqlalchemy import (Table, Column, Integer, Float, Numeric, Boolean, \
 String, Text, LargeBinary, DateTime, ForeignKey)
@@ -26,6 +27,19 @@ class User(Base):
 
     username = Column(String(), primary_key=True)
     password = Column(String())
+
+
+class Review(Base):
+    '''
+        用户表
+    '''
+    __tablename__ = 'review'
+
+    index = Column(Integer(),autoincrement=True, primary_key=True)
+    review=Column(String())
+    path = Column(String())
+    nickname = Column(String())
+    time = Column(String())
 
 
 class Essay(Base):
