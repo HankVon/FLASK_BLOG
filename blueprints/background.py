@@ -220,6 +220,60 @@ def delete():
     }
 
 
+@background.post('/api/delete_user')
+def delete_user():
+    username = request.form.get('username')
+    
+    user = g.db_session.query(User).filter(User.username == username).first()
+    if not user:
+        return {
+            'code': 0,
+            'content': '该用户不存在'
+        }
+        
+    g.db_session.delete(user)
+    g.db_session.commit()
+    
+    return {
+        'code': 1
+    }
+
+
+@background.post('/api/update_user')
+def update_user():
+    inusername = request.form.get('username')
+    inpassword = request.form.get('password')
+    
+
+    if not inusername:
+        return {
+            'code': 0,
+            'content': '用户名不能为空'
+        }
+
+    if not inpassword:
+        return {
+            'code': 0,
+            'content': '密码不能为空'
+        }
+
+    user = g.db_session.query(User).filter(User.username == inusername).first()
+    if not user:
+        return {
+            'code': 0,
+            'content': '该用户不存在'
+        }
+
+    user.username = inusername
+    user.password = inpassword
+    
+    g.db_session.commit()
+
+    return {
+        'code': 1
+    }
+
+
 @background.get('/api/get_user_list')
 def get_user_list():
     users = g.db_session.query(User)
@@ -234,6 +288,27 @@ def get_user_list():
     return {
         'code': 1,
         'content': users_list
+    }
+
+
+@background.post('/api/get_user')
+def get_user():
+    username = request.form.get('username')
+    
+    user = g.db_session.query(User).filter(User.username == username).first()
+    print(user)
+    if not user:
+        return {
+            'code': 0,
+            'content': '用户名不正确'
+        }
+        
+    return {
+        'code': 1,
+        'content': {
+            'username': user.username,
+            'password': user.password,
+        }
     }
 
 

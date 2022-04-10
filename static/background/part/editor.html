@@ -3,34 +3,35 @@
     <button type="button" class="layui-btn" onclick="load('#content', 'background/part/table.html')">返回</button>
   </div>
   <div class="layui-form-item" style="width: 500px; margin-left: 400px;">
-    <label class="layui-form-label">输入框</label>
+    <label class="layui-form-label">标题</label>
     <div class="layui-input-block">
       <input type="text" id="essay" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off"
         class="layui-input">
     </div>
   </div>
   <div style="height: 350px; width: 600px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;">
-    <div id="editor">
+    <div id="ckeditor" class="ckeditor">
       <p>This is some sample content.</p>
     </div>
   </div>
 
   <div class="layui-form-item" style="width: 500px; margin-left: 400px;">
-    <label class="layui-form-label">选择框</label>
+    <label class="layui-form-label">分类</label>
     <div class="layui-input-block">
       <select name="city" id="sort" lay-verify="required">
         <option value=""></option>
-        <option value="0">北京</option>
-        <option value="1">上海</option>
-        <option value="2">广州</option>
-        <option value="3">深圳</option>
-        <option value="4">杭州</option>
+            <option value="Pyton">Pyton</option>
+            <option value="Linux">Linux</option>
+            <option value="HTML">HTML</option>
+            <option value="C语言">C语言</option>
+            <option value="数据结构">数据结构</option>
+            <option value="计算机网络">计算机网络</option>
       </select>
     </div>
   </div>
 
   <div class="layui-form-item" style="width: 500px; margin-left: 400px;">
-    <label class="layui-form-label">输入框</label>
+    <label class="layui-form-label">路径</label>
     <div class="layui-input-block">
       <input type="text" id="path" name="title" required lay-verify="required" placeholder="请输入链接" autocomplete="off"
         class="layui-input">
@@ -57,7 +58,7 @@
   };
   ClassicEditor.builtinPlugins.push(MinHeightPlugin);
   ClassicEditor
-    .create(document.querySelector('#editor'))
+    .create(document.querySelector('#ckeditor'))
     .then(editor => {
           this.editor.isReadOnly = false; //（此处验证为是否可读）
         })

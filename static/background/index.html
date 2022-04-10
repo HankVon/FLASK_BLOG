@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>开始使用 layui</title>
+  <title>广之</title>
   <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
 
 
@@ -14,15 +14,15 @@
  
     <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
         <ul class="layui-tab-title">
-        <li class="layui-this" onclick="load('#content', '/background/part/table.html')">网站设置</li>
-        <li onclick="load('#content', '/background/part/administrator.html')">用户管理</li>
-       
+        <li class="layui-this" onclick="load('#content', '/background/part/table.html')">文章管理</li>
+        <li onclick="load('#content', '/background/part/administrator.html')">管理员管理</li>
+        <li><a href="/front">主页</a></li>
         </ul>
     </div>  
     <div id="content">
         <div class="layui-btn-group">
             <button type="button" class="layui-btn" onclick="load('#content', '/background/part/upload.html')">增加</button>
-            <button type="button" class="layui-btn">分类</button>
+            
         </div>
         
         <div class="layui-tab-content" id="passage_list" style="width: 1000px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;">

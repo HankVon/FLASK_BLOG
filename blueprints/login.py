@@ -54,7 +54,41 @@ def user_login():
     }
 
 
+@login.post('/api/signup_user')
+def signup_user():
+    inusername = request.form.get('username')
+    inpassword = request.form.get('password')
 
+    if not inusername:
+        return {
+            'code': 0,
+            'content': '用户名不能为空'
+        }
+
+    if not inpassword:
+        return {
+            'code': 0,
+            'content': '密码不能为空'
+        }
+
+
+    result = g.db_session.query(User).filter(User.username == inusername).first()
+    if result:
+        return {
+            'code': 0,
+            'content': '该用户已存在'
+        }
+
+    user = User(
+        username = inusername,
+        password = inpassword
+    )
+    g.db_session.add(user)
+    g.db_session.commit()
+
+    return {
+        'code': 1
+    }
 
 '''
     Route

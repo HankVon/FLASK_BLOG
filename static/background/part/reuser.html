@@ -1,0 +1,27 @@
+<div id="content">
+    <div>
+        <button type="button" class="layui-btn" onclick="load('#content', 'background/part/administrator.html')">返回</button>
+    </div>
+    <div class="layui-form-item" style="width: 500px; margin-left: 400px;">
+        <label class="layui-form-label">用户名</label>
+        <div class="layui-input-block">
+        <input type="text" id="username" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="width: 500px; margin-left: 400px;">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-block">
+        <input type="password" id="password" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div style="width: 500px; margin-left: 500px;">
+    <button onclick="update_user()">提交</button> 
+    </div>
+</div>
+
+<script>
+    $('#username').val(username);
+    get_user();
+</script>

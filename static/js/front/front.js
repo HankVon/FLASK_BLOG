@@ -1,4 +1,6 @@
-
+function load(id, file) {
+    $(id).load(file);
+}
 
 function get_essay(){
     $.ajax({
@@ -11,10 +13,12 @@ function get_essay(){
             if (data['code'] == 1 ) {
                 for (let i = 0; i < data['content'].length; i++) {
                     $('#essay_list').append(`
-                        <div class="layui-font-20 layui-card-header"><a onclick="get_subessay('${data['content'][i]['path']}')">${data['content'][i]['essay']}<a/></div>
+                        <div class="layui-row layui-col-space15" style="height: 200px; margin-bottom: 20px;margin-top: 20px; background-color:#e8dede">
+                        <div class="layui-font-20 layui-card-header"><a href="#" onclick="get_subessay('${data['content'][i]['path']}')">${data['content'][i]['essay']}<a/></div>
                         <div class="layui-card-body">
                             ${data['content'][i]['time']}<br/><br/>
-                            ${data['content'][i]['content']}
+                        <div class="ca">${data['content'][i]['content']}</div>
+                        </div>
                         </div>
                         `);
                 }
@@ -114,7 +118,7 @@ function search() {
                 if (data['code'] == 1 ) {
                     for (let i = 0; i < data['content'].length; i++) {
                         $('#essay_list').append(`
-                            <div class="layui-font-20 layui-card-header"><a onclick="get_subessay('${data['content'][i]['path']}')">${data['content'][i]['essay']}<a/></div>
+                            <div class="layui-font-20 layui-card-header"><a href="#" onclick="get_subessay('${data['content'][i]['path']}')">${data['content'][i]['essay']}<a/></div>
                             <div class="layui-card-body">
                                 ${data['content'][i]['time']}<br/><br/>
                                 ${data['content'][i]['content']}

@@ -11,6 +11,13 @@ function editor_load(id, file, inpath) {
 }
 
 
+var username;
+
+function user_load(id, file, inusername) {
+    $(id).load(file);
+    username = inusername;
+}
+
 function add() {
     let essay = $('#essay').val(); 
     let content = $('.ck-editor__editable_inline').html(); 
@@ -117,14 +124,85 @@ function get_user_list() {
                     $('#user_list').append(`<tr>\
                         <td>${data['content'][i]['username']}</td>
                         <td>
-                            <button type="button" class="layui-btn" onclick="load('#content', '/background/part/user.html')">编辑</button>
-                            <button type="button" class="layui-btn" onclick="">删除</button>    
+                            <button type="button" class="layui-btn" onclick="user_load('#content', '/background/part/reuser.html','${data['content'][i]['username']}')">编辑</button>
+                            <button type="button" class="layui-btn" onclick="delete_user('${data['content'][i]['username']}')">删除</button>    
                         </td>                        
                     </tr>`);
                 }
 
             }
         
+        }
+    }); 
+}
+
+
+function delete_user(username) {
+    $.ajax({
+        url: "/api/delete_user",
+        data: {
+            'username' : username
+        }, //请求的表单
+        type: "POST",
+        dataType: "json",
+        success: (data) => {
+            //请求成功后访问类属性，并显示服务端返回数据
+            //如果登录成功
+            if (data['code'] == 1 ) {
+                alert('删除成功');
+                get_user_list();
+            }
+            
+        }
+    }); 
+}
+
+
+function update_user() {
+   
+    let username = $('#username').val(); 
+    let password = $('#password').val();
+
+    $.ajax({
+        url: "/api/update_user",
+        data: {
+            'username' : username,
+            'password' : password,
+            
+        }, //请求的表单
+        type: "POST",
+        dataType: "json",
+        success: (data) => {
+            //请求成功后访问类属性，并显示服务端返回数据
+            //如果登录成功
+            if (data['code'] == 1 ) {
+                alert('用户已更改');
+                get_user();
+            }
+            
+        }
+    }); 
+
+}
+
+
+function get_user() {
+    $.ajax({
+        url: '/api/get_user',
+        type: 'POST',
+        data: {
+            'username': $('#username').val()
+        },
+        dataType: 'json',
+        success: (data) => {
+            
+            if (data['code'] == 1 ) {
+                $('#username').val(data['content']['username']);
+                $('#password').val(data['content']['password']);
+            }
+            else{
+                alert('获取失败')
+            }
         }
     }); 
 }
@@ -142,7 +220,7 @@ function get_essay() {
             
             if (data['code'] == 1 ) {
                 $('#essay').val(data['content']['essay']);
-                $('.ck-editor__editable_inline').html(data['content']['content']);
+                $('.ckeditor').html(data['content']['content']);
                 $('#sort').val(data['content']['sort']);
             }
         
