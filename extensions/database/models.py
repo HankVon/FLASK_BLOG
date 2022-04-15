@@ -1,4 +1,6 @@
 from datetime import datetime
+from email import message
+import email
 from itertools import count
 from time import time
 from click import IntRange
@@ -31,7 +33,7 @@ class User(Base):
 
 class Review(Base):
     '''
-        用户表
+        评论表
     '''
     __tablename__ = 'review'
 
@@ -40,6 +42,30 @@ class Review(Base):
     path = Column(String())
     nickname = Column(String())
     time = Column(String())
+
+class Message(Base):
+    '''
+        留言表
+    '''
+    __tablename__ = 'message'
+
+    index = Column(Integer(),autoincrement=True, primary_key=True)
+    message=Column(String())
+    email = Column(String())
+    name = Column(String())
+    time = Column(String())
+
+class Note(Base):
+    '''
+        笔记表
+    '''
+    __tablename__ = 'note'
+
+    note = Column(String(),primary_key=True)
+    content = Column(String())
+    sort = Column(String)
+    time = Column(String())
+    
 
 
 class Essay(Base):

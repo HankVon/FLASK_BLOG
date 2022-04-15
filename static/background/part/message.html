@@ -1,0 +1,40 @@
+<div style="width: 1000px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;">
+    <div id="popSearchRoleTest"></div>
+    <table class="layui-table">
+      <colgroup>
+        <col width="200">
+        <col width="200">
+        <col width="200">
+        <col width="200">
+        <col width="200">
+      </colgroup>
+      <thead>
+      <tr>  
+          <th>留言序号</th>
+          <th>留言者</th>
+          <th>邮箱</th>
+          <th>留言时间</th>
+          <th>操作</th>
+      </tr> 
+      </thead>
+      <tbody id="message_list">
+      
+      </tbody>
+    </table>
+  </div>
+  
+  <script>
+      function message_load(message){
+		layer.open({
+            type:1,
+            title:"查看留言",
+            area: ['500px', '300px'],
+            content:$("#popSearchRoleTest").html(message),
+            end:function (res) {
+            $("#popSearchRoleTest").css("display",'none');
+   }
+        });
+      }
+
+    get_message_list();
+  </script>

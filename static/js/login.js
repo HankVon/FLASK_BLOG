@@ -14,8 +14,7 @@ function signup_user() {
             //请求成功后访问类属性，并显示服务端返回数据
             //如果登录成功
             if (data['code'] == 1 ) {
-                alert('管理员添加成功')
-                window.location = '/background';
+                alert('管理员注册成功')
             }
             
             else {

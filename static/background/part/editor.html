@@ -1,6 +1,6 @@
 <div id="content">
-  <div>
-    <button type="button" class="layui-btn" onclick="load('#content', 'background/part/table.html')">返回</button>
+  <div style="margin-left: 270px;">
+    <button type="button" class="layui-btn layui-btn-normal" onclick="load('#content', 'background/part/table.html')">返回</button>
   </div>
   <div class="layui-form-item" style="width: 500px; margin-left: 400px;">
     <label class="layui-form-label">标题</label>
@@ -9,23 +9,23 @@
         class="layui-input">
     </div>
   </div>
-  <div style="height: 350px; width: 600px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;">
-    <div id="ckeditor" class="ckeditor">
-      <p>This is some sample content.</p>
-    </div>
-  </div>
 
   <div class="layui-form-item" style="width: 500px; margin-left: 400px;">
     <label class="layui-form-label">分类</label>
     <div class="layui-input-block">
       <select name="city" id="sort" lay-verify="required">
         <option value=""></option>
-            <option value="Pyton">Pyton</option>
-            <option value="Linux">Linux</option>
-            <option value="HTML">HTML</option>
-            <option value="C语言">C语言</option>
-            <option value="数据结构">数据结构</option>
-            <option value="计算机网络">计算机网络</option>
+        <option value="Pyton">Pyton</option>
+        <option value="Linux">Linux</option>
+        <option value="HTML">HTML</option>
+        <option value="C语言">C语言</option>
+        <option value="Java">Java</option>
+        <option value="Android">Android</option>
+        <option value="软件工程">软件工程</option>
+        <option value="组成原理">组成原理</option>
+        <option value="操作系统">操作系统</option>
+        <option value="数据结构">数据结构</option>
+        <option value="计算机网络">计算机网络</option>
       </select>
     </div>
   </div>
@@ -37,35 +37,97 @@
         class="layui-input">
     </div>
   </div>
-
-  <div style="width: 500px; margin-left: 500px;">
-    <button onclick="update()">提交</button>
+  <div style="height: 350px; width: 600px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;">
+    <div id="ckeditor" class="ckeditor">
+      <p>This is some sample content.</p>
+    </div>
   </div>
+
+
+  <div style="margin-left: 1100px;">
+    <button id="subBtn" class="layui-btn layui-btn-normal">提交</button> 
+    </div>
 </div>
 
 <script>
-  function MinHeightPlugin(editor) {
-    this.editor = editor;
-  }
-  MinHeightPlugin.prototype.init = function () {
-    this.editor.ui.view.editable.extendTemplate({
-      attributes: {
-        style: {
-          minHeight: '300px'
-        }
-      }
-    });
-  };
-  ClassicEditor.builtinPlugins.push(MinHeightPlugin);
-  ClassicEditor
-    .create(document.querySelector('#ckeditor'))
-    .then(editor => {
-          this.editor.isReadOnly = false; //（此处验证为是否可读）
-        })
-    .catch(error => {
-      console.error(error);
-    });
+  layui.use(['layedit'],function(){
+    var layedit = layui.layedit;
+    var index = layedit.build('ckeditor'); //建立编辑器
 
+    get_essay();
+
+    function get_essay() {
+    $.ajax({
+        url: '/api/get_essay',
+        type: 'POST',
+        data: {
+            'path': path
+        },
+        dataType: 'json',
+        success: (data) => {
+            
+            if (data['code'] == 1 ) {
+                $('#essay').val(data['content']['essay']);
+                $('#sort').val(data['content']['sort']);
+                layedit.setContent(index,data.content.content);
+                
+            }
+        
+        }
+    }); 
+}
+
+$('#subBtn').click(function(){
+
+    let essay = $('#essay').val(); 
+    content = layedit.getContent(index); 
+    let sort = $('#sort').val(); 
+    let path = $('#path').val();
+
+    $.ajax({
+        url: "/api/update",
+        data: {
+            'essay' : essay,
+            'content' : content,
+            'sort' : sort,
+            'path' : path
+        }, //请求的表单
+        type: "POST",
+        dataType: "json",
+        success: (data) => {
+            //请求成功后访问类属性，并显示服务端返回数据
+            //如果登录成功
+            if (data['code'] == 1 ) {
+                alert('文章已更改');
+                get_essay();
+            }
+            
+        }
+    }); 
+})
+  })
+  // function MinHeightPlugin(editor) {
+  //   this.editor = editor;
+  // }
+  // MinHeightPlugin.prototype.init = function () {
+  //   this.editor.ui.view.editable.extendTemplate({
+  //     attributes: {
+  //       style: {
+  //         minHeight: '300px'
+  //       }
+  //     }
+  //   });
+  // };
+  // ClassicEditor.builtinPlugins.push(MinHeightPlugin);
+  // ClassicEditor
+  //   .create(document.querySelector('#ckeditor'))
+  //   .then(editor => {
+  //         this.editor.isReadOnly = false; //（此处验证为是否可读）
+  //       })
+  //   .catch(error => {
+  //     console.error(error);
+  //   });
+  //   CKEDITOR.replace("");
   $('#path').val(path);
-  get_essay();
+  
 </script>

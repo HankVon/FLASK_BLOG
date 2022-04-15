@@ -1,3 +1,4 @@
+import email
 from importlib.resources import path
 from operator import or_
 import re
@@ -40,6 +41,7 @@ def get_essay():
         essays_list.append({
             'essay': essay.essay, 
             'content' : essay.content,
+            'sort' : essay.sort,
             'path' : essay.path,
             'time': essay.time
         })
@@ -48,6 +50,46 @@ def get_essay():
     return {
         'code': 1,
         'content': essays_list
+    }
+
+
+@front.get('/api/get_notes')
+def get_notes():
+    notes = g.db_session.query(Note)
+    
+    notes_list = []
+    for note in notes:
+        notes_list.append({
+            'note': note.note, 
+            'content' : note.content,
+            'sort' : note.sort,
+            'time': note.time
+        })
+
+
+    return {
+        'code': 1,
+        'content': notes_list
+    }
+
+
+@front.get('/api/get_messages')
+def get_messages():
+    messages = g.db_session.query(Message)
+    
+    messages_list = []
+    for message in messages:
+        messages_list.append({
+            'message': message.message, 
+            'email' : message.email,
+            'name' : message.name,
+            'time': message.time
+        })
+
+
+    return {
+        'code': 1,
+        'content': messages_list
     }
 
 
@@ -111,6 +153,44 @@ def add_review():
     }
 
 
+@front.post('/api/add_message')
+def add_message():
+    inmessage = request.form.get('message')
+    inname = request.form.get('name')
+    inemail = request.form.get('email')   
+
+    if not inmessage:
+        return {
+            'code': 0,
+            'content': '内容不能为空'
+        }
+
+    if not inname:
+        return {
+            'code': 0,
+            'content': '名字不能为空'
+        }
+
+    if not inemail:
+        return {
+            'code': 0,
+            'content': '邮箱不能为空'
+        }
+
+    message = Message(
+        message=inmessage,
+        name=inname,
+        email=inemail,
+        time=timer.get_current_time()
+    )
+    g.db_session.add(message)
+    g.db_session.commit()
+
+    return {
+        'code': 1
+    }
+
+
 @front.post('/api/search')
 def search():
     search_content = request.form.get('search_content')
@@ -138,9 +218,51 @@ def search():
     }
 
 
+@front.post('/api/search_bysort')
+def search_bysort():
+    search_content = request.form.get('search_content')
+
+    essays = g.db_session.query(Essay).filter(Essay.sort == search_content)
+
+    essays_list = []
+    for essay in essays:
+        essays_list.append({
+            'essay': essay.essay,
+            'content': essay.content,
+            'time': essay.time,
+            'path': essay.path
+        })
+
+    if not essays_list:
+        return {
+            'code': 0
+        }
+
+    return {
+        'code': 1,
+        'content': essays_list
+    }
+
+
 @front.route('/front')
 def front_():
     return front.send_static_file('front/index.html')
+
+
+@front.route('/note')
+def front_note():
+    return front.send_static_file('front/notes.html')
+
+
+@front.route('/message')
+def front_message():
+    return front.send_static_file('front/messages.html')
+
+
+@front.route('/about')
+def front_about():
+    return front.send_static_file('front/about.html')
+
 
 
 @front.route('/passage/<name>')
@@ -157,6 +279,7 @@ def name(name):
         'code': 1,
         'essay': essay.essay, 
         'content' : essay.content,
+        'sort' : essay.sort,
         'path' : essay.path,
         'time': essay.time
     }

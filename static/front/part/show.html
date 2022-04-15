@@ -1,25 +1,40 @@
-    <div class="layui-card" style="width: 800px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;background:#FFF; color:#000;margin-bottom: 20px;margin-top: 20px;">
-        <div class="layui-card-header layui-font-20" id="title"><>卡片面板</div>
-        <div class="layui-card-body">
+
+<div id="essay_list" style="width: 800px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;color:#000;margin-bottom: 20px;margin-top: 20px;">
+<div  style="width: 800px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;background:#FFF; color:#000;margin-bottom: 20px;margin-top: 20px;border-radius: 30px;box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.1);">
+        <div class="layui-card-header layui-font-20" >
+            <font face="STHupo" ><div id="title">卡片面板</div></font>
+        </div>
+        <div>
+            <div style="width: 160px;">
+                <i class="layui-icon layui-col-md2" style="font-size: 20px;">&#xe68d;</i>
+                <p id="time" class="layui-col-md10"></p>
+            </div>
+            <div style="width: 160px; margin-left: 200px;">
+                <i class="layui-icon layui-col-md2" style="font-size: 20px;">&#xe705;</i>
+                <p id="classification" class="layui-col-md10"></p>
+            </div>
+        </div>
+        <div class="layui-card-body" style="margin-top: 20px;">
             <div id="subcontent">
                 卡片式面板面板通常用于非白色背景色的主体内<br>
                 从而映衬出边框投影
             </div>
         </div>
-    </div>
+</div>
 
-    <div class="layui-card" style="width: 800px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;background:#FFF; color:#000;margin-bottom: 20px;margin-top: 20px;">
-        <div class="layui-card-header">留下评论</div>
+    <div class="layui-card" style="width: 800px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;margin-bottom: 20px;margin-top: 20px;border-radius: 30px;box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.1);">
+        <div class="layui-card-header layui-font-20" ><font face="STLiti">留下评论</font></div>
         <div class="layui-card-body">
             <div>
                 <textarea id="review" style="height: 150px ;width: 100%;" placeholder="内容"></textarea>
-                <input id="nickname" type="text" placeholder="昵称（必填）" value="" /><br />
-                <button onclick="add_review()">提交</button>
+                <div class="layui-input-inline"><input id="nickname" type="text" placeholder="昵称（必填）" class="layui-input" /></div>
+                
+                <button class="layui-btn"  onclick="add_review()">发布</button>
             </div>
         </div>
         <div>
         </div>
     </div>
 
-
-    
+    <div id ="comments"></div>
+</div>

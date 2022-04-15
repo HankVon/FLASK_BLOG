@@ -117,6 +117,53 @@ def add_user():
     }
 
 
+@background.post('/api/add_note')
+def add_note():
+    innote = request.form.get('note')
+    incontent = request.form.get('content')
+    insort = request.form.get('sort')
+
+    if not innote:
+        return {
+            'code': 0,
+            'content': '标题不能为空'
+        }
+
+    if not incontent:
+        return {
+            'code': 0,
+            'content': '内容不能为空'
+        }
+
+    if not insort:
+        return {
+            'code': 0,
+            'content': '分类不能为空'
+        }
+
+    result = g.db_session.query(Note).filter(Note.note == innote).first()
+    if result:
+        return {
+            'code': 0,
+            'content': '该笔记已存在'
+        }
+
+    note = Note(
+        note = innote,
+        content = incontent,
+        sort = insort,
+        time = timer.get_current_time(),
+        
+    )
+    g.db_session.add(note)
+    g.db_session.commit()
+
+    return {
+        'code': 1
+    }
+
+
+
 @background.get('/api/get_essay_list')
 def get_essay_list():
     essays = g.db_session.query(Essay)
@@ -134,6 +181,46 @@ def get_essay_list():
     return {
         'code': 1,
         'content': essays_list
+    }
+
+
+@background.get('/api/get_note_list')
+def get_note_list():
+    notes = g.db_session.query(Note)
+    
+    notes_list = []
+    for note in notes:
+        notes_list.append({
+            'note': note.note, 
+            'sort' : note.sort,
+            'time': note.time
+        })
+
+
+    return {
+        'code': 1,
+        'content': notes_list
+    }
+
+
+@background.get('/api/get_message_list')
+def get_message_list():
+    messages = g.db_session.query(Message)
+    
+    messages_list = []
+    for message in messages:
+        messages_list.append({
+            'message': message.message, 
+            'email' : message.email,
+            'name' :message.name,
+            'time': message.time,
+            'index': message.index
+        })
+
+
+    return {
+        'code': 1,
+        'content': messages_list
     }
 
 
@@ -157,6 +244,28 @@ def get_essay():
             'sort': essay.sort
         }
     }
+
+
+@background.post('/api/get_note')
+def get_note():
+    note = request.form.get('note')
+    
+    note = g.db_session.query(Note).filter(Note.note == note).first()
+    
+    if not note:
+        return {
+            'code': 0,
+            'content': '笔记不正确'
+        }
+        
+    return {
+        'code': 1,
+        'content': {
+            'note': note.note,
+            'content': note.content,
+            'sort': note.sort
+        }
+    }    
 
 
 @background.post('/api/update')
@@ -213,6 +322,44 @@ def delete():
         }
         
     g.db_session.delete(essay)
+    g.db_session.commit()
+    
+    return {
+        'code': 1
+    }
+
+
+@background.post('/api/delete_note')
+def delete_note():
+    note = request.form.get('note')
+
+    note = g.db_session.query(Note).filter(Note.note == note).first()
+    if not note:
+        return {
+            'code': 0,
+            'content': '该笔记不存在'
+        }
+        
+    g.db_session.delete(note)
+    g.db_session.commit()
+    
+    return {
+        'code': 1
+    }
+
+
+@background.post('/api/delete_message')
+def delete_message():
+    index = request.form.get('index')
+
+    index = g.db_session.query(Message).filter(Message.index == index).first()
+    if not index:
+        return {
+            'code': 0,
+            'content': '该留言不存在'
+        }
+        
+    g.db_session.delete(index)
     g.db_session.commit()
     
     return {

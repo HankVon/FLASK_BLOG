@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>广之</title>
+  <style>
+    .ca{
+      overflow : hidden;
+
+      text-overflow: ellipsis;
+
+      display: -webkit-box;
+
+      -webkit-line-clamp: 3; /* 能够显示的行数，超出部分用...表示*/
+
+      -webkit-box-orient: vertical;
+    }
+
+  </style>
+  <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+</head>
+<body background="https://images2.alphacoders.com/954/954227.jpg">
+ 
+<!-- 你的 HTML 代码 -->
+<header>
+  <ul class="layui-nav layui-bg-blue ">
+    
+      <li class="layui-nav-item">
+        <a href="/front">首页</a>
+      </li>
+      
+      <li class="layui-nav-item">
+        <a href="/note">笔记</a>
+      </li>
+
+      <li class="layui-nav-item">
+        <a href="/message">留言</a>
+      </li>
+
+      <li class="layui-nav-item ">
+        <a href="/about">关于</a>
+      </li>
+
+      <li class="layui-nav-item layui-col-md-offset7">
+        
+        <div class="layui-input-inline">
+          <input id="search_content" name="search" type="text"  placeholder="关键字" autocomplete="off" class="layui-input">
+        </div>
+        
+        <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="search() ">Search</button>
+      </li>
+    </li>
+  </ul>
+</header> 
+
+<div id="content" class="layui-col-md9">
+    <div id="essay_list" class="layui-col-md9" style="width: 800px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;margin-left: 170px;">
+        <div style="width: 800px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;">
+        <div id="note_list" >
+        
+        </div>
+        </div>
+    </div>
+</div>
+
+  <div class="sidebar layui-col-md3 layui-col-lg3 layui-layout-right" style="margin-top: 80px; margin-right: 100px;">
+      <div id="me" class="layui-card" style="width: 300px; height: 300px;border-radius: 30px;box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.1);">
+        <div style="width: 300px; height: 150px;background-image: url('static/js/front/zl.jpg');">
+          <div style="width: 80px; height: 80px; margin: auto;top: 0;left: 0;right: 0;bottom: 0;padding-top: 100px;">
+            <a href="/"><img src="static/js/front/zl.jpg" alt="" class="layui-col-md12"></a>
+          </div>
+        </div>
+        <div class="nickname" style="padding-top: 45px;padding-left: 125px;">
+          <h2>广之</h2>
+        </div>
+      <div class="link" style="padding-left: 95px;padding-top: 20px;">
+          <a href="https://github.com" >Github</a>
+          <a href="https://mail.qq.com/" style="padding-left: 30px;">Email</a>
+      </div>
+      </div>    
+      <div id="adsort" class="layui-card" style="width: 300px; height: 310px;border-radius: 20px;box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.1);">
+        <h3 class="side-title">
+          <i class="layui-icon">&#xe705;</i>
+          文章分类
+      </h3>
+      <hr class="layui-border-black">
+      <ul class="layui-row layui-col-space5">
+        <li class="layui-col-md12 layui-col-xs6">
+          <a href="#" onclick="search_bysort('Linux')" class="subsort">
+            <i class="layui-icon">&#xe60a;</i>
+              Linux         
+          </a>
+        </li>
+        <li class="layui-col-md12 layui-col-xs6">
+          <a href="#" onclick="search_bysort('Pyton')" class="subsort">
+            <i class="layui-icon">&#xe60a;</i>
+              Pyton               
+          </a>
+        </li>
+        <li class="layui-col-md12 layui-col-xs6">
+          <a href="#" onclick="search_bysort('HTML')" class="subsort">
+            <i class="layui-icon">&#xe60a;</i>
+              HTML                
+          </a>
+        </li>
+        <li class="layui-col-md12 layui-col-xs6">
+          <a href="#" onclick="search_bysort('C语言')" class="subsort">
+            <i class="layui-icon">&#xe60a;</i>
+              C语言                  
+          </a>
+        </li>   
+        <li class="layui-col-md12 layui-col-xs6">
+          <a href="#" onclick="search_bysort('Java')" class="subsort">
+            <i class="layui-icon">&#xe60a;</i>
+              Java                 
+          </a>
+        </li>
+        <li class="layui-col-md12 layui-col-xs6">
+          <a href="#" onclick="search_bysort('Android')" class="subsort">
+            <i class="layui-icon">&#xe60a;</i>
+              Android  
+          </a>
+        </li>
+        <li class="layui-col-md12 layui-col-xs6">
+          <a href="#" onclick="search_bysort('软件工程')" class="subsort">
+            <i class="layui-icon">&#xe60a;</i>
+              软件工程            
+          </a>
+        </li>
+        <li class="layui-col-md12 layui-col-xs6">
+          <a href="#" onclick="search_bysort('组成原理')" class="subsort">
+            <i class="layui-icon">&#xe60a;</i>
+              组成原理                  
+          </a>
+        </li>
+        <li class="layui-col-md12 layui-col-xs6">
+          <a href="#" onclick="search_bysort('操作系统')" class="subsort">
+            <i class="layui-icon">&#xe60a;</i>
+              操作系统                  
+          </a>
+        </li>
+        <li class="layui-col-md12 layui-col-xs6">
+          <a href="#" onclick="search_bysort('数据结构')" class="subsort">
+            <i class="layui-icon">&#xe60a;</i>
+              数据结构     
+          </a>
+        </li>
+        <li class="layui-col-md12 layui-col-xs6">
+          <a href="#" onclick="search_bysort('计算机网络')" class="subsort">
+            <i class="layui-icon">&#xe60a;</i>
+              计算机网络             
+          </a>
+        </li>
+      </ul>
+    </div>  
+  </div>
+  
+
+
+<script src="/js/layui/layui.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/js/front/front.js"></script>
+    
+    <script>
+        get_notes();
+    </script>
+</body>
+</html>
